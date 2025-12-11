@@ -1,15 +1,15 @@
 # Dependencies
 node_modules/
-Front-End/node_modules/
-Back-End/node_modules/
+client/node_modules/
+server/node_modules/
 
 # Build outputs
 dist/
 dist-ssr/
 *.local
 build/
-Front-End/dist/
-Back-End/dist/
+client/dist/
+server/dist/
 
 # Logs
 logs

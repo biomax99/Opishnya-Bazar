@@ -6,13 +6,13 @@
 
 ```
 Opishnya_bazar/
-├── Front-End/          # Vue 3 фронтенд-застосунок
-└── Back-End/           # Hono API сервер
+├── client/          # Vue 3 фронтенд-застосунок
+└── server/           # Hono API сервер
 ```
 
 ## Технології
 
-### Front-End
+### client
 - **Vue 3** - прогресивний JavaScript фреймворк
 - **TypeScript** - типізована надбудова над JavaScript
 - **Vite** - швидкий інструмент збірки
@@ -22,7 +22,7 @@ Opishnya_bazar/
 - **TanStack Vue Query** - управління серверним станом
 - **Vitest** - тестування
 
-### Back-End
+### server
 - **Hono** - легкий веб-фреймворк
 - **Bun** - швидкий JavaScript runtime
 - **TypeScript** - типізація
@@ -34,20 +34,20 @@ Opishnya_bazar/
 
 ## Встановлення та запуск
 
-### Front-End
+### client
 
 ```bash
-cd Front-End
+cd client
 bun install
 bun dev
 ```
 
 Фронтенд буде доступний за адресою, вказаною Vite (зазвичай http://localhost:5173)
 
-### Back-End
+### server
 
 ```bash
-cd Back-End
+cd server
 bun install
 bun dev
 ```
@@ -56,7 +56,7 @@ bun dev
 
 ## Команди розробки
 
-### Front-End
+### client
 
 ```bash
 bun dev          # Запуск dev сервера з hot reload
@@ -66,7 +66,7 @@ bun lint         # Lint та auto-fix
 bun format       # Форматування коду
 ```
 
-### Back-End
+### server
 
 ```bash
 bun dev          # Запуск dev сервера з hot reload
@@ -75,6 +75,6 @@ bun dev          # Запуск dev сервера з hot reload
 ## Розробка
 
 1. Клонуйте репозиторій
-2. Встановіть залежності в обох директоріях (Front-End та Back-End)
+2. Встановіть залежності в обох директоріях (client та server)
 3. Запустіть обидва сервери для повної функціональності
 

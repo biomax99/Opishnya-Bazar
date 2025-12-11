@@ -1,5 +1,5 @@
 {
-  "name": "Back-End",
+  "name": "server",
   "scripts": {
     "dev": "bun run --hot src/index.ts"
   },
