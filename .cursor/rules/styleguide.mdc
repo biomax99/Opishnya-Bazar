@@ -1,0 +1,6 @@
+---
+description: Styling code
+alwaysApply: true
+---
+
+Never add comments to code. Write self-documenting code instead of adding comments.
