@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useDark } from '@vueuse/core'
 // import { RouterLink, RouterView } from 'vue-router'
+
+const isDark = useDark()
 </script>
 
 <template>

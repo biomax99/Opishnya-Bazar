@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "bun run --parallel dev --filter ./apps/*",
+    "dev": "bun run --filter './apps/*' dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
