@@ -29,4 +29,3 @@ productsRouter.delete('/:id', (c) => {
   const { id } = c.req.param()
   return c.json({ message: `Продукт ${id} видалено` })
 })
-

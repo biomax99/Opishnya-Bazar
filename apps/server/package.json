@@ -1,12 +1,19 @@
 {
   "name": "server",
   "scripts": {
-    "dev": "bun run --watch index.ts"
+    "dev": "bun run --watch index.ts",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:generate-custom": "drizzle-kit generate --custom",
+    "drizzle:migrate": "drizzle-kit migrate",
+    "better-auth:generate": "bunx @better-auth/cli@latest generate --output ./drizzle/schemas/auth.ts"
   },
   "dependencies": {
+    "better-auth": "^1.4.9",
     "drizzle-orm": "^0.45.1",
     "hono": "^4.10.8",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "uuid": "^13.0.0",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@types/pg": "^8.16.0",
