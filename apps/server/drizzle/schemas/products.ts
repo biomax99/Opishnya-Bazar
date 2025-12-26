@@ -4,21 +4,21 @@ import { baseTable } from '..'
 
 export const product = pgTable('product', {
   ...baseTable,
-  title: text('title').notNull(),
-  description: text('description'),
-  used: boolean('used').default(false).notNull(),
-  price: numeric('price').notNull(),
-  phone: text('phone').notNull(),
+  title: text().notNull(),
+  description: text(),
+  used: boolean().default(false).notNull(),
+  price: numeric({ mode: 'number' }).notNull(),
+  phone: text().notNull(),
 })
 
 export const productPhoto = pgTable(
   'product_photo',
   {
     ...baseTable,
-    productId: uuid('product_id')
+    productId: uuid()
       .notNull()
       .references(() => product.id, { onDelete: 'cascade' }),
-    url: text('url').notNull(),
+    url: text().notNull(),
   },
   table => [index('product_photo_productId_idx').on(table.productId)],
 )

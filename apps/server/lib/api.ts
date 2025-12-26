@@ -11,24 +11,6 @@ export interface ApiResponse<T = unknown> {
   }
 }
 
-export function successResponse<T>(data: T): ApiResponse<T> {
-  return {
-    status: 'success',
-    result: data,
-  }
-}
-
-export function errorResponse(message: string, code?: string, details?: unknown): ApiResponse {
-  return {
-    status: 'error',
-    error: {
-      message,
-      code,
-      details,
-    },
-  }
-}
-
 export function handleError(c: Context, error: unknown, status: ContentfulStatusCode = 422) {
   if (error instanceof Error) {
     return c.json(errorResponse(error.message, 'INTERNAL_ERROR'), status)
