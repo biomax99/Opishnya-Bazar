@@ -1,21 +1,27 @@
 <script setup lang="ts">
-import { useDark } from '@vueuse/core'
-// import { RouterLink, RouterView } from 'vue-router'
+import { watch } from 'vue'
+import { RouterView } from 'vue-router'
+import MainLayout from './layouts/MainLayout.vue'
+import { useThemeStore } from './stores/theme'
 
-const isDark = useDark()
+const themeStore = useThemeStore()
+
+watch(
+  () => themeStore.isDark,
+  (isDark) => {
+    if (isDark) {
+      document.documentElement.classList.add('dark')
+    }
+    else {
+      document.documentElement.classList.remove('dark')
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
-  <header>
-
-    <div class="wrapper">
-      <nav>
-        <!-- <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink> -->
-      </nav>
-      1
-    </div>
-  </header>
-
-  <!-- <RouterView /> -->
+  <MainLayout>
+    <RouterView />
+  </MainLayout>
 </template>

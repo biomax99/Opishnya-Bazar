@@ -1,31 +1,39 @@
 import { Hono } from 'hono'
+import { validateBody, validateParams } from '~/lib/middleware'
+import { productCreateSchema, productIdSchema, productUpdateSchema } from '~/lib/validation'
+import {
+  createProduct,
+  deleteProduct,
+  getProductById,
+  getProducts,
+  updateProduct,
+} from './controller'
 
 export const productsRouter = new Hono()
 
-productsRouter.get('/', (c) => {
-  return c.json([
-    { id: 1, title: 'Велосипед', price: 2000 },
-    { id: 2, title: 'Смартфон', price: 5000 },
-  ])
-})
+productsRouter.get('/', getProducts)
 
-productsRouter.post('/', async (c) => {
-  const product = await c.req.json()
-  return c.json({ id: 3, ...product })
-})
+productsRouter.post(
+  '/',
+  validateBody(productCreateSchema),
+  createProduct,
+)
 
-productsRouter.get('/:id', (c) => {
-  const { id } = c.req.param()
-  return c.json({ id, title: 'Приклад продукту', price: 1234 })
-})
+productsRouter.get(
+  '/:id',
+  validateParams(productIdSchema),
+  getProductById,
+)
 
-productsRouter.put('/:id', async (c) => {
-  const { id } = c.req.param()
-  const product = await c.req.json()
-  return c.json({ id, ...product })
-})
+productsRouter.put(
+  '/:id',
+  validateParams(productIdSchema),
+  validateBody(productUpdateSchema),
+  updateProduct,
+)
 
-productsRouter.delete('/:id', (c) => {
-  const { id } = c.req.param()
-  return c.json({ message: `Продукт ${id} видалено` })
-})
+productsRouter.delete(
+  '/:id',
+  validateParams(productIdSchema),
+  deleteProduct,
+)
