@@ -48,21 +48,11 @@ export async function updateProduct(id: string, body: ProductUpdateInput) {
   return updatedProduct || null
 }
 
-export async function deleteProduct(c: Context) {
-  try {
-    const { id } = c.get('validatedParams') as { id: string }
+export async function deleteProduct(id: string) {
     const [deletedProduct] = await db
       .delete(product)
       .where(eq(product.id, id))
       .returning()
 
-    if (!deletedProduct) {
-      return c.status(404)
-    }
-
-    return c.status(204)
-  }
-  catch (error) {
-    return handleError(c, error)
-  }
+    return deletedProduct || null
 }

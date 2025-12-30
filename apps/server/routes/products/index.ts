@@ -1,18 +1,14 @@
-import type { Next } from 'hono'
-import type { Context } from 'hono/jsx'
-import type * as z from 'zod'
-import { sValidator } from '@hono/standard-validator'
-import { Hono } from 'hono'
-import { validateParams } from '~/lib/middleware'
+import {Hono} from 'hono'
+import {sValidator} from '@hono/standard-validator'
 import {
-  createProduct,
-  deleteProduct,
-  getProductById,
-  getProducts,
-  productCreateSchema,
-  productIdSchema,
-  productUpdateSchema,
-  updateProduct,
+    createProduct,
+    deleteProduct,
+    getProductById,
+    getProducts,
+    productCreateSchema,
+    productIdSchema,
+    productUpdateSchema,
+    updateProduct,
 } from './service'
 
 export const productsRouter = new Hono()
@@ -20,41 +16,55 @@ export const productsRouter = new Hono()
 productsRouter.get('/', getProducts)
 
 productsRouter.post(
-  '/',
-  sValidator('json', productCreateSchema),
-  async (c) => {
-    const data = c.req.valid('json')
-    await createProduct(data)
+    '/',
+    sValidator('json', productCreateSchema),
+    async (c) => {
+        const data = c.req.valid('json')
+        await createProduct(data)
 
-    return c.status(201)
-  },
+        return c.status(201)
+    },
 )
 
 productsRouter.get(
-  '/:id',
-  validateParams(productIdSchema),
-  getProductById,
+    '/:id',
+    sValidator('query', productIdSchema),
+    async (c) => {
+        const query = c.req.valid('query')
+        const product = await getProductById(query.id)
+
+        return c.json(product || [])
+    }
 )
 
 productsRouter.put(
-  '/:id',
-  validateParams(productIdSchema),
-  sValidator('json', productUpdateSchema),
-  async (c) => {
-    const id = c.req.param('id')
-    const data = c.req.valid('json')
-    const product = await updateProduct(id, data)
+    '/:id',
+    sValidator("query", productIdSchema),
+    sValidator('json', productUpdateSchema),
+    async (c) => {
+        const query = c.req.valid('query')
+        const data = c.req.valid('json')
+        const product = await updateProduct(query.id, data)
 
-    if (!product) {
-      return c.status(404)
-    }
+        if (!product) {
+            return c.status(404)
+        }
 
-    return c.status(204)
-  },
+        return c.status(204)
+    },
 )
 
 productsRouter.delete(
-  '/:id',
-  validateParams(productIdSchema),
-  deleteProduct,
+    '/:id',
+    sValidator('query', productIdSchema),
+    async (c) => {
+        const query = c.req.valid('query')
+        const product = await deleteProduct(query.id)
+
+        if (!product) {
+            return c.status(404)
+        }
+
+        return c.json(204)
+    }
 )

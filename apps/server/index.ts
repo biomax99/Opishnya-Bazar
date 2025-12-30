@@ -32,12 +32,7 @@ app.route('/products', productsRouter)
 
 const port = Number(process.env.PORT) || 3000
 
-if (import.meta.main) {
-  Bun.serve({
-    port,
-    fetch: app.fetch,
-  })
-  console.log(`Server is running on http://localhost:${port}`)
+export default {
+  port,
+  fetch: app.fetch,
 }
-
-export default app
