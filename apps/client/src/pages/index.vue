@@ -2,10 +2,11 @@
 import Card from 'primevue/card'
 import Message from 'primevue/message'
 import ProgressSpinner from 'primevue/progressspinner'
+import { watchEffect } from 'vue'
 import ProductCard from '~/components/ProductCard.vue'
 import { useProducts } from '~/composables/useApi'
 
-const { data: products, isLoading, isError } = useProducts()
+const { data: products, isLoading, isError, error } = useProducts()
 </script>
 
 <template>

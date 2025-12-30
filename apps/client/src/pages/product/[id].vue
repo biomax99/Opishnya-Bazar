@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import Card from 'primevue/card'
 import Message from 'primevue/message'
 import ProgressSpinner from 'primevue/progressspinner'
 import { useProduct } from '~/composables/useApi'
 
-const route = useRoute()
-const productId = computed(() => route.params.id as string)
+const { id } = defineProps<{
+  id: string
+}>()
+
+const route = useRoute('/product/[id]')
+const productId = computed(() => route.params.id)
 
 const { data: product, isLoading, isError } = useProduct(productId)
 </script>
