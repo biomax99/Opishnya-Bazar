@@ -1,6 +1,7 @@
+import type { MaybeRefOrGetter } from 'vue'
 import type { ProductCreate } from '~/types/product'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { computed } from 'vue'
+import { computed, toValue } from 'vue'
 import { api } from '~/entities/product/api'
 
 export function useProducts() {
@@ -10,8 +11,8 @@ export function useProducts() {
   })
 }
 
-export function useProduct(id: string | (() => string)) {
-  const productId = computed(() => (typeof id === 'function' ? id() : id))
+export function useProduct(id: MaybeRefOrGetter<string>) {
+  const productId = computed(() => toValue(id))
 
   return useQuery({
     queryKey: ['product', productId],
