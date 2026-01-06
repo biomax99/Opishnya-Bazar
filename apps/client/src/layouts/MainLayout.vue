@@ -6,9 +6,8 @@ const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-  <div class="min-h-screen flex w-full bg-gradient-to-br from-surface-50 via-surface-100 to-surface-200 dark:from-surface-950 dark:via-surface-900 dark:to-surface-800">
+  <div class="min-h-screen flex w-full bg-linear-to-br from-surface-50 via-surface-100 to-surface-200 dark:from-surface-950 dark:via-surface-900 dark:to-surface-800">
     <AppSidebar />
-
     <div
       class="flex-1 transition-all duration-300"
       :class="{

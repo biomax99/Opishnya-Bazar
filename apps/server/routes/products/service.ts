@@ -23,13 +23,8 @@ export type ProductCreateInput = z.infer<typeof productCreateSchema>
 export type ProductUpdateInput = z.infer<typeof productUpdateSchema>
 
 export async function getProducts(c: Context) {
-  try {
-    const products = await db.select().from(product)
-    return c.json(products)
-  }
-  catch (error) {
-    return handleError(c, error)
-  }
+  const products = await db.select().from(product)
+  return c.json(products)
 }
 
 export async function getProductById(id: string) {
@@ -49,10 +44,10 @@ export async function updateProduct(id: string, body: ProductUpdateInput) {
 }
 
 export async function deleteProduct(id: string) {
-    const [deletedProduct] = await db
-      .delete(product)
-      .where(eq(product.id, id))
-      .returning()
+  const [deletedProduct] = await db
+    .delete(product)
+    .where(eq(product.id, id))
+    .returning()
 
-    return deletedProduct || null
+  return deletedProduct || null
 }

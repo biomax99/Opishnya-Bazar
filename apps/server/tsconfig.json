@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
+    "composite": true,
+    "target": "esnext",
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "target": "esnext",
-    "types": ["bun-types"],
     "paths": {
       "~/*": ["./*"]
     },
+    "types": ["@types/bun"],
     "strict": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "declaration": true,
+    "declarationMap": true
   }
 }

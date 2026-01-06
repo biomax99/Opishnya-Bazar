@@ -1,23 +1,20 @@
+import type { InferRequestType } from 'hono/client'
 import type { MaybeRefOrGetter } from 'vue'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { computed, toValue } from 'vue'
-import { api } from '~/entities/product/api'
-import type {ProductCreate} from "~/entities/product/types.ts";
+import { toValue } from 'vue'
+import { api } from '~/lib/api'
 
 export function useProducts() {
   return useQuery({
     queryKey: ['products'],
-    queryFn: () => api.getAll(),
+    queryFn: () => api.products.$get().then(res => res.json()),
   })
 }
 
 export function useProduct(id: MaybeRefOrGetter<string>) {
-  const productId = computed(() => toValue(id))
-
   return useQuery({
-    queryKey: ['product', productId],
-    queryFn: () => api.getById(productId.value),
-    enabled: computed(() => !!productId.value),
+    queryKey: ['product', id],
+    queryFn: () => api.products[':id'].$get({ param: { id: toValue(id) } }).then(res => res.json()),
   })
 }
 
@@ -25,7 +22,7 @@ export function useCreateProduct() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (product: ProductCreate) => api.create(product),
+    mutationFn: (product: InferRequestType<typeof api.products.$post>) => api.products.$post(product),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
     },
@@ -36,11 +33,11 @@ export function useUpdateProduct() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: string, data: Partial<ProductCreate> }) =>
-      api.update(id, data),
+    mutationFn: (data: InferRequestType<typeof api.products[':id']['$put']>) =>
+      api.products[':id'].$put(data),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
-      queryClient.invalidateQueries({ queryKey: ['product', variables.id] })
+      queryClient.invalidateQueries({ queryKey: ['product', variables.query.id] })
     },
   })
 }
@@ -49,8 +46,10 @@ export function useDeleteProduct() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) => api.delete(id),
-    onSuccess: () => {
+    mutationFn: (data: InferRequestType<typeof api.products[':id']['$delete']>) =>
+      api.products[':id'].$delete(data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['product', variables.query.id] })
       queryClient.invalidateQueries({ queryKey: ['products'] })
     },
   })
