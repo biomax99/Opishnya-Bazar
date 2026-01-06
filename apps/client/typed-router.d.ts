@@ -30,9 +30,23 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/create-listing': RouteRecordInfo<
+      '/create-listing',
+      '/create-listing',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/login': RouteRecordInfo<
       '/login',
       '/login',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/my-listings': RouteRecordInfo<
+      '/my-listings',
+      '/my-listings',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -42,6 +56,13 @@ declare module 'vue-router/auto-routes' {
       '/product/:id',
       { id: ParamValue<true> },
       { id: ParamValue<false> },
+      | never
+    >,
+    '/profile': RouteRecordInfo<
+      '/profile',
+      '/profile',
+      Record<never, never>,
+      Record<never, never>,
       | never
     >,
   }
@@ -63,15 +84,33 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
+    'src/pages/create-listing.vue': {
+      routes:
+        | '/create-listing'
+      views:
+        | never
+    }
     'src/pages/login.vue': {
       routes:
         | '/login'
       views:
         | never
     }
+    'src/pages/my-listings.vue': {
+      routes:
+        | '/my-listings'
+      views:
+        | never
+    }
     'src/pages/product/[id].vue': {
       routes:
         | '/product/[id]'
+      views:
+        | never
+    }
+    'src/pages/profile.vue': {
+      routes:
+        | '/profile'
       views:
         | never
     }

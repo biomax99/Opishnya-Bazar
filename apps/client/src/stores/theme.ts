@@ -1,13 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 
+const getInitialThemeState = () => {
+  if (typeof window === 'undefined')
+    return false
+  const stored = localStorage.getItem('theme')
+  if (stored)
+    return stored === 'dark'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
 export const useThemeStore = defineStore('theme', () => {
-  const isDark = ref<boolean>(() => {
-    if (typeof window === 'undefined') return false
-    const stored = localStorage.getItem('theme')
-    if (stored) return stored === 'dark'
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-  })
+  const isDark = ref<boolean>(getInitialThemeState())
 
   function toggleTheme() {
     isDark.value = !isDark.value

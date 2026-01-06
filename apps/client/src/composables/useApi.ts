@@ -1,8 +1,8 @@
 import type { MaybeRefOrGetter } from 'vue'
-import type { ProductCreate } from '~/types/product'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { computed, toValue } from 'vue'
 import { api } from '~/entities/product/api'
+import type {ProductCreate} from "~/entities/product/types.ts";
 
 export function useProducts() {
   return useQuery({

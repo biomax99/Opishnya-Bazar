@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-import { RouterView } from 'vue-router'
+import { computed, watch } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import MainLayout from './layouts/MainLayout.vue'
+import AuthLayout from './layouts/AuthLayout.vue'
 import { useThemeStore } from './stores/theme'
 
+const route = useRoute()
 const themeStore = useThemeStore()
+
+const currentLayout = computed(() => {
+  return route.meta.layout === 'auth' ? AuthLayout : MainLayout
+})
 
 watch(
   () => themeStore.isDark,
@@ -21,7 +27,7 @@ watch(
 </script>
 
 <template>
-  <MainLayout>
+  <component :is="currentLayout">
     <RouterView />
-  </MainLayout>
+  </component>
 </template>
